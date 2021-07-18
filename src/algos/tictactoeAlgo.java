@@ -235,6 +235,7 @@ public class tictactoeAlgo {
         ArrayList<Integer> empList = emptyCells(dummy);
         Random rand = new Random();
         Integer randomIndex = rand.nextInt(empList.size());
+        
         if(empList.size()>0)
             return new MinMaxUtil(0, empList.get(randomIndex));
         else

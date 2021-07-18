@@ -7,7 +7,7 @@ import Fonts.FontRender;
 
 public class frontEndUtil {
     int SIZE = 700;
-    int BOARD_SIZE = 500;
+    int BOARD_SIZE = 460;
     int CELL_SIZE = BOARD_SIZE/3;
 
     /* Color BACKGROUND_COLOR = new Color(0x1c1c1c);

@@ -8,13 +8,16 @@ import javax.swing.plaf.metal.MetalButtonUI;
 
 import utils.*;
 import algos.*;
+import music.musicPlayer;
 
 public class tictactoe extends frontEndUtil implements ActionListener {
     Boolean SINGELPLAYER = false;
     Boolean HARD = false;
+
     Character PLAYER = 'X';
     Character BOT = 'O';
-    int noOfComparision=0;
+
+    // int noOfComparision=0;
     private ArrayList<Character> origBoard = new ArrayList<Character>();
 
     boolean XTurn = true;
@@ -26,6 +29,7 @@ public class tictactoe extends frontEndUtil implements ActionListener {
     JPanel BOARD = new JPanel();
     ArrayList<JButton> buttons = new ArrayList<JButton>();
     JPanel FOOTER = new JPanel();
+    JButton RERUN = new JButton(" ");
 
     public void init() {
         XTurn = true;
@@ -40,6 +44,7 @@ public class tictactoe extends frontEndUtil implements ActionListener {
     tictactoe(Boolean SINGLEPLAYER, Boolean HARD){
         this.SINGELPLAYER = SINGLEPLAYER;
         this.HARD = HARD;
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(null);
         frame.setSize(SIZE, SIZE);
@@ -47,7 +52,7 @@ public class tictactoe extends frontEndUtil implements ActionListener {
         frame.getContentPane().setBackground(BACKGROUND_COLOR);
 
         HEADDER.setBackground(BACKGROUND_COLOR);
-        HEADDER.setBounds(0, 0, SIZE, 2*(SIZE-BOARD_SIZE)/3);
+        HEADDER.setBounds(0, 0, SIZE, (SIZE-BOARD_SIZE)/3);
 
         TITLE.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         TITLE.setAlignmentY(JLabel.BOTTOM_ALIGNMENT);
@@ -58,7 +63,7 @@ public class tictactoe extends frontEndUtil implements ActionListener {
         frame.add(HEADDER);
 
         BODY.setBackground(BACKGROUND_COLOR);
-        BODY.setBounds(0, 2*(SIZE-BOARD_SIZE)/3, SIZE, BOARD_SIZE);
+        BODY.setBounds(0, (SIZE-BOARD_SIZE)/3, SIZE, BOARD_SIZE);
         BODY.setLayout(null);
 
         BOARD.setBounds((SIZE-BOARD_SIZE)/2, 0, BOARD_SIZE, BOARD_SIZE);
@@ -67,6 +72,7 @@ public class tictactoe extends frontEndUtil implements ActionListener {
 
         for (int i = 0; i < 9; i++) {
             origBoard.add(' ');
+
             buttons.add(new JButton());
             BOARD.add(buttons.get(i));
             buttons.get(i).setBorder(borderCell);
@@ -82,7 +88,12 @@ public class tictactoe extends frontEndUtil implements ActionListener {
 
         JPanel FOOTER = new JPanel();
         FOOTER.setBackground(BACKGROUND_COLOR);
-        FOOTER.setBounds(0, SIZE - (SIZE-BOARD_SIZE)/3, SIZE, (SIZE-BOARD_SIZE)/3);
+        FOOTER.setBounds(0, SIZE - 2*(SIZE-BOARD_SIZE)/3 +10, SIZE, 2*(SIZE-BOARD_SIZE)/3);
+        RERUN.addActionListener(this);
+        RERUN.setBackground(X_COLOR);
+        RERUN.setEnabled(false);
+        RERUN.setFocusable(false);
+        FOOTER.add(RERUN);
         frame.add(FOOTER);
         // System.out.println(buttons[0].getText().equals(""));
     }
@@ -94,7 +105,6 @@ public class tictactoe extends frontEndUtil implements ActionListener {
     }
 
     public int bestSpot() {
-        noOfComparision = 0;
         ArrayList<Character> object = new ArrayList<Character>(origBoard);
 
         if (HARD) {
@@ -113,6 +123,9 @@ public class tictactoe extends frontEndUtil implements ActionListener {
                 }
             });
         }
+        RERUN.setText("Play Again");
+        RERUN.setEnabled(true);
+        RERUN.setFont(fontNewsPaper2);
     }
 
     public Boolean check(Character who) {
@@ -155,8 +168,11 @@ public class tictactoe extends frontEndUtil implements ActionListener {
                         origBoard.set(i, PLAYER);
                         XTurn = false;
 
+                        if(!SINGELPLAYER)
+                            RERUN.setBackground(O_COLOR);
+
                         if(!check(PLAYER) && SINGELPLAYER){
-                            playBot();
+                                playBot();
                         }
                     }
                 }else{
@@ -167,10 +183,16 @@ public class tictactoe extends frontEndUtil implements ActionListener {
                         origBoard.set(i, BOT);
                         // System.out.println(origBoard);
                         XTurn = true;
+                        RERUN.setBackground(X_COLOR);
                         check(BOT);
                     }
                 }
             }
+        }
+        if(e.getSource() == RERUN){
+            frame.setVisible(false);
+            players p = new players();
+            p.showButtonDemo();
         }
     }
 }

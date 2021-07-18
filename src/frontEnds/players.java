@@ -25,7 +25,7 @@ public class players extends frontEndUtil{
     }
 
     private void prepareGUI() {
-        mainFrame = new JFrame("Players");
+        mainFrame = new JFrame("TicTacToe");
         mainFrame.setSize(500, 500);
         mainFrame.setLayout(new GridLayout(3, 1));
         mainFrame.getContentPane().setBackground(BACKGROUND_COLOR);
@@ -55,7 +55,7 @@ public class players extends frontEndUtil{
 
     public void showButtonDemo() {
         statusLabel.setText("Made with Love");
-        headerLabel.setText("Choose the players");
+        headerLabel.setText("Choose The Players");
         headerLabel.setFont(fontHelsky2);
         JButton single = new JButton("Single player");
         single.setBackground(X_COLOR);
